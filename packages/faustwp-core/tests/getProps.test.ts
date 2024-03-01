@@ -29,7 +29,7 @@ describe('getProps', () => {
       expect.assertions(1);
       expect(
         await getNextStaticProps({}, { Page: {}, notFound: true }),
-      ).toStrictEqual({ notFound: true });
+      ).toStrictEqual({ notFound: true, revalidate: 900 });
     });
 
     test('getNextStaticProps() handles `redirect`', async () => {
@@ -83,16 +83,19 @@ describe('getProps', () => {
             }
           }
         `,
-        variables: () => ({
+        variables: (ctx: any, extra?: Record<string, unknown>) => ({
           testVar: true,
+          extra
         }),
       };
 
-      expect(await getNextStaticProps({}, { Page })).toStrictEqual({
+      expect(
+        await getNextStaticProps({}, { Page, extra: { custom: 'data' } }),
+      ).toStrictEqual({
         props: {
           __APOLLO_STATE__: { testing: true },
           data: { generalSettings: { title: 'My test site' } },
-          __PAGE_VARIABLES__: { testVar: true },
+          __PAGE_VARIABLES__: { testVar: true,  extra: { custom: 'data' } },
         },
         revalidate: 900,
       });
@@ -120,8 +123,9 @@ describe('getProps', () => {
             }
           }
         `,
-        variables: () => ({
+        variables: (ctx: any, extra?: Record<string, unknown>) => ({
           testVar: true,
+          extra
         }),
       };
 
@@ -134,13 +138,13 @@ describe('getProps', () => {
               end() {},
             },
           } as any,
-          { Page },
+          { Page, extra: { custom: 'data' } },
         ),
       ).toStrictEqual({
         props: {
           __APOLLO_STATE__: { testing: true },
           data: { generalSettings: { title: 'My test site' } },
-          __PAGE_VARIABLES__: { testVar: true },
+          __PAGE_VARIABLES__: { testVar: true, extra: { custom: 'data' } },
         },
       });
     });

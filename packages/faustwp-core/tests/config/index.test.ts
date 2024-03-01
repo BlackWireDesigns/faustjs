@@ -23,10 +23,7 @@ describe('config', () => {
       // @ts-ignore
       templates: [],
       // @ts-ignore
-      experimentalPlugins: [
-        new HelloWorldTestPlugin(),
-        new HelloWorldTestPlugin(),
-      ],
+      plugins: [new HelloWorldTestPlugin(), new HelloWorldTestPlugin()],
     });
 
     expect(consoleLogSpy).toBeCalledTimes(2);
@@ -37,7 +34,7 @@ describe('config', () => {
       setConfig({
         // @ts-ignore
         templates: [],
-        experimentalPlugins: [
+        plugins: [
           new HelloWorldTestPlugin(),
           new InvalidPlugin() as FaustPlugin,
         ],
@@ -80,5 +77,16 @@ describe('config', () => {
 
     setConfig({ usePersistedQueries: true } as any as FaustConfig);
     expect(getConfig().usePersistedQueries).toBeTruthy();
+  });
+
+  test('config does not use basePath by default', () => {
+    setConfig({} as any as FaustConfig);
+    expect(getConfig().basePath).toBeFalsy();
+  });
+
+  test('basePath can be modified', () => {
+    const mockBasePath = '/blog';
+    setConfig({ basePath: mockBasePath } as any as FaustConfig);
+    expect(getConfig().basePath).toEqual(mockBasePath);
   });
 });

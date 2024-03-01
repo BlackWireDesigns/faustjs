@@ -8,21 +8,21 @@ on:
 jobs:
   e2e-test-next-getting-started-example:
     name: (legacy) Next Getting Started Example on Node ${{ matrix.node }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       PR_REPO: ${{github.event.pull_request.head.repo.full_name}}
       PR_BRANCH: ${{github.event.pull_request.head.ref}}
     strategy:
       matrix:
-        node: ['16', '18']
+        node: ['18', '20']
     defaults:
       run:
         working-directory: ./
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       # Get the PR branch so we can pull the correct Next.js example path
@@ -37,7 +37,7 @@ jobs:
       # and use the PR branch to pull the correct example URL
       - name: npx create next app
         run: |
-          npx create-next-app \
+          npx create-next-app@13 \
             -e https://github.com/${PR_REPO}/tree/${PR_BRANCH} \
             --example-path examples/next/getting-started \
             --use-npm \

@@ -1,5 +1,128 @@
 # @faustwp/core
 
+## 3.0.0
+
+### Major Changes
+
+- aad3bbc: BREAKING CHANGE: With the deprecation of node version 16.x and it no longer being maintained we have updated our engines and workflows to only use 18+. Please update to use node version 18+.
+
+### Minor Changes
+
+- 0b0a88e: The Faust.js plugin system is no longer experimental. We have maintained backward compatibility as we move towards deprecating `experimentalPlugins` in favor of `plugins` in the Faust config file `faust.config.js`. We recommend moving over to using `plugins` instead of `experimentalPlugins` as soon as possible as a future version will remove the experimental config option.
+
+## 2.1.2
+
+### Patch Changes
+
+- e7745b8: Exposes viewer data for use during the useAuth hook call.
+
+## 2.1.1
+
+### Patch Changes
+
+- 1b495d7: Fixes a bug when navigating to a page client side that threw an error with multiple queries.
+
+## 2.1.0
+
+### Minor Changes
+
+- 085c30d: Added a new `skip` config option to `useAuth` to conditionally invoke the hook
+
+### Patch Changes
+
+- 085c30d: Fixed a bug that made a request to the token endpoint on every page in `@faustwp/core@2.0.0`
+
+## 2.0.0
+
+### Minor Changes
+
+- c79c8c2: Added the ability to provide multiple queries to a given Faust Template:
+
+  ```js
+  import {GET_POST, GET_LAYOUT} from './queries.js'
+
+  export default function Component(props) {
+  }
+
+  Component.queries = [
+    {
+      query: GET_LAYOUT
+    },
+    {
+      query: GET_POST,
+      variables: (seedNode, ctx) {
+        return {
+          id: seedNode.databaseId,
+          asPreview: ctx?.asPreview
+        }
+      }
+    }
+  ]
+  ```
+
+  **Note:** Your Faust template can use either `Component.queries` or `Component.query`, but not both.
+
+## 1.2.0
+
+### Patch Changes
+
+- 3722ab3: Fix `x-using` header not appearing when i18n options are set in `next.config.js`
+
+## 1.1.2
+
+### Patch Changes
+
+- a419252: Fixed an issue where persisted queries were not being enabled properly when setting the `usePersistedQueries` flag.
+- cf887d3: Fixed bug where the "Edit Post" link was missing in the Faust Toolbar
+- 795d956: Improved keyboard navigation within Toolbar menus, allowing for dropdowns to be toggled open with "enter"
+
+  Note that the `ToolbarItem` component no longer uses the prop `handleClick`, instead relying on pass-through props in order to separate the click event from the the key event.
+
+  ```jsx
+  <ToolbarItem onKeyDown={handleKeyDown} onClick={handleClick}>
+    Log Out
+  </ToolbarItem>
+  ```
+
+## 1.1.1
+
+### Patch Changes
+
+- 176bc82: Chore: Fixes import order style lint error.
+- 3f5cee8: Prefix all api routes with the basePath from faust config when available. Fixes issue with preview tokens and logout with the toolbar.
+- 3810bbb: Fixes an issue where previews would get stuck in an endless loop when basePath was set.
+
+## 1.1.0
+
+### Minor Changes
+
+- f308cc5: Allow passing extra parameters in Page.variables(). This is allowed in `getNextStaticProps`, `getServerSideProps` and `getWordPressProps`:
+
+  Ex:
+
+  ```
+  export function getStaticProps(ctx) {
+    return getWordPressProps({ ctx, extra: {hello: 'world'} }); // extra parameter will be forwarded to the Template `variables` callback
+  }
+
+  Component.variables = ({ databaseId }, ctx, extra) => {
+    console.log(extra) // {hello: 'world'}
+    ...
+  }
+  ```
+
+## 1.0.3
+
+### Patch Changes
+
+- 790b485: Bug Fix: `useLogin` and `fetchAccessToken` access token `code` parameter is now properly escaped. Fixes bug with authentication not workin on Vercel.
+
+## 1.0.2
+
+### Patch Changes
+
+- 80e5605: Fixed a bug in the seed query when persisted queries are enabled. Thanks @justlevine!
+
 ## 1.0.1
 
 ### Patch Changes

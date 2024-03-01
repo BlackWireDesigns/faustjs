@@ -1,5 +1,67 @@
 # @faustwp/cli
 
+## 3.0.0
+
+### Major Changes
+
+- aad3bbc: BREAKING CHANGE: With the deprecation of node version 16.x and it no longer being maintained we have updated our engines and workflows to only use 18+. Please update to use node version 18+.
+
+### Minor Changes
+
+- 572b253: Added: Detect if the `NEXT_PUBLIC_WORDPRESS_URL` is a `wpengine.com` TLD and if so recommend a switch to `wpenginepowered.com`
+
+### Patch Changes
+
+- 47f6bd0: Faust now warns you if the secret key in your environment is invalid or incorrect.
+
+## 2.0.0
+
+### Major Changes
+
+- c163fa5: **BREAKING**: Removed telemetry CLI commands for `faust telemetry enable/disable/status` for managing and viewing telemetry opt-in status. Telemetry functionality has been moved to the Faust WordPress plugin. Sites that previously opted in from CLI will no longer send telemetry data unless someone opts in from the WordPress side.
+
+### Patch Changes
+
+- c163fa5: Adds block_editor_utils and experimental_app_router to telemetry events.
+
+## 1.2.1
+
+### Patch Changes
+
+- c75ab2b: Bug: Quote blockset "output-path" to prevent issues with space in paths.
+
+## 1.2.0
+
+### Minor Changes
+
+- c29f83d: Add blockset command in @faust/cli and faustwp plugin.
+
+  Add your blocks inside `wp-blocks` folder. Then run `faust blockset` to compile and upload the blocks into WordPress. Blocks will be available in the editor.
+
+- d3d30aa: Added support for authenticated WPGraphQL introspection queries using FAUST_SECRET_KEY. It is no longer required to enable "Public Introspection" in WPGraphQL.
+
+### Patch Changes
+
+- 03ee9e8: Bug Fix: Forces cli blockset command to use @wordpress/scripts package.
+
+## 1.1.4
+
+### Patch Changes
+
+- 9a84eb4: Allow CLI health checks to be skipped via `--skip-health-checks` argument
+
+## 1.1.3
+
+### Patch Changes
+
+- b201ba2: Fixed a regression where an improper exit code was being thrown when 1. the `NEXT_PUBLIC_WORDPRESS_URL` environment variable was not set or 2. the GraphQL endpoint was not available
+
+## 1.1.1
+
+### Patch Changes
+
+- 176bc82: Adds reference to parent tsconfig.json and fixes type resolution errors.
+
 ## 1.0.1
 
 ### Patch Changes

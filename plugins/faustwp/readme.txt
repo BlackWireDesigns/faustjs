@@ -2,8 +2,8 @@
 Contributors: antpb, apmatthe, blakewpe, chriswiegman, claygriffiths, jasonkonen, joefusco, markkelnar, matthewguywright, mindctrl, modernnerd, rfmeier, TeresaGobble, thdespou, wpengine
 Tags: faustjs, faust, headless, decoupled, composable-architecture
 Requires at least: 5.7
-Tested up to: 6.2
-Stable tag: 1.0.0
+Tested up to: 6.4
+Stable tag: 1.2.2
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -54,26 +54,29 @@ plugins/faustwp/.wordpress-org/screenshot-3.png
 
 == Changelog ==
 
-= 1.0.0 =
-
-### Major Changes
-
-- 7952ebe: Transitioned to [Semantic Versioning](https://semver.org). There are no breaking changes in this release.
+= 1.2.2 =
 
 ### Patch Changes
 
-- ef92d02: Added `wp-graphql-content-blocks` version to the telemetry endpoint.
+- 47f6bd0: Faust now warns you if the secret key in your environment is invalid or incorrect.
 
-= 0.8.7 =
-
-### Patch Changes
-
-- 2eeb366: The default plugin setting for "Disable WordPress Theme Admin Pages" is now unchecked, requiring a user to opt-in after initial activation.
-
-= 0.8.6 =
+= 1.2.1 =
 
 ### Patch Changes
 
-- 02f7f78: Registered a new GraphQL field, `globalStylesheet`, that returns [wp_get_global_stylesheet](https://developer.wordpress.org/reference/functions/wp_get_global_stylesheet/) and provides the same arguments as the core WordPress function.
+- 05cc940: Fix: swap traditional custom post type URLs in WordPress admin for the headless frontend custom post type URLs.
 
-[View the full changelog](https://faustjs.org/docs/changelog/faustwp)
+= 1.2.0 =
+
+### Minor Changes
+
+- 5f78b15: Requests to robots.txt on the WordPress site are now accessible and are no longer redirected to the front-end site.
+- c163fa5: Added support for anonymous opt-in telemetry. Previously this functionality was in the Faust CLI package, but has been moved to the WordPress plugin instead. All telemetry collection is optional and anonymous, and it is disabled by default. If you were previously opted in from Faust CLI, once you update the Faust CLI packages your site will no longer send telemetry data unless you opt in again from the WordPress plugin.
+
+### Patch Changes
+
+- 205fb09: Improved plugin's process for handling blockset file uploads by leveraging WordPress' native [unzip_file](https://developer.wordpress.org/reference/functions/unzip_file/) function.
+- 41a6d9c: Fixed issue where term URIs were rewritten from relative to absolute during GraphQL requests when they should not have been. This was causing nodeByUri queries for terms to fail.
+- e725bda: Adds phpstan to CI/CD workflow. Runs as part of the lint step.
+
+[View the full changelog](https://github.com/wpengine/faustjs/blob/canary/plugins/faustwp/CHANGELOG.md)
